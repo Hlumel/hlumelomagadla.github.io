@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hlumelo Magadla - Systems Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+</head>
+<body>
+    <header>
+        <h1>Hlumelo Magadla - Systems Engineer</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#experience">Work Experience</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle"> <!-- Added -->
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="profile">
+            <img src="image1.jpg" alt="Hlumelo Magadla">
+            <p>Recent graduate with a diploma in Information Technology specializing in Systems Engineering. Passionate about designing, implementing, and managing complex systems to optimize performance and efficiency.</p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-list"></div> <!-- Projects will be dynamically loaded here -->
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Cloud Computing</li>
+            <li>Javascript</li>
+            <li>C++</li>
+			<li>C#</li>
+			<li>Microsoft Word</li>
+			<li>Microsoft Excel</li>
+        </ul>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="education">
+            <h3>Diploma in Information Technology</h3>
+            <p>Richfield Graduate Institute of Technology, 2023</p>
+			<h3>Bachelor of Science in Information Technology</h3>
+			<p>Richfield Graduate Institute of Technology, 2025</p>
+        </div>
+        <!-- Add more education details as needed -->
+    </section>
+
+    <section id="experience">
+        <h2>Work Experience</h2>
+        <div class="experience">
+            <h3>Sales Agent</h3>
+            <p>Rand Tutor, 2021</p>
+            <p>I was a sales agent and my responsibilities were to handle customer enquiries.</p>
+        </div>
+        <!-- Add more work experience details as needed -->
+    </section>
+
+    <section id="testimonials">
+        <h2>Testimonials</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <p>"Hlumelo is a highly skilled engineer with a knack for solving complex problems." - Christopher Mauwa  </p>
+            </div>
+            <!-- Add more testimonials as needed -->
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Hlumelo Magadla</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Smooth scrolling for anchor links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if (target.length) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                }
+            });
+
+            // Dynamic project loading
+            $.getJSON('projects.json', function(data) {
+                var projects = data.projects;
+                var projectList = $('.project-list');
+                $.each(projects, function(index, project) {
+                    projectList.append('<div class="project"><h3>' + project.name + '</h3><p>' + project.description + '</p><a data-fancybox="gallery" href="' + project.image + '"><img src="' + project.thumbnail + '" alt="' + project.name + '"></a></div>');
+                });
+            });
+
+            // Testimonial slideshow
+            $('.testimonial-slider').slick({
+                autoplay: true,
+                autoplaySpeed: 5000,
+                dots: true,
+                arrows: false,
+                infinite: true,
+                speed: 1000,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                adaptiveHeight: true,
+                fade: true,
+                cssEase: 'linear'
+            });
+
+            // Form submission handling and basic validation
+            $('#contact-form').submit(function(event) {
+                event.preventDefault();
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var message = $('#message').val();
+
+                if (name && email && message) {
+                    // Here you can perform AJAX call to submit form data
+                    alert('Form submitted successfully!');
+                    $('#contact-form')[0].reset();
+                } else {
+                    alert('Please fill in all fields.');
+                }
+            });
+
+            // Toggle navigation menu for mobile
+            $('.menu-toggle').click(function() {
+                $('nav ul').toggleClass('
